@@ -50,14 +50,15 @@
 
 \section{Erste Iteration: Zieldefinition und Konzept}
 
-Systemadministratoren (kurz: Sysadmins) haben es nicht einfach zu Zeiten der Corona-Krise: Ins Home-Office verbannt sind sie teilweise ihrer letzten sozialen Kontakte beraubt, zumal \textit{Star Wars}-Conventions und andere Veranstaltungen für Nerds alle abgesagt worden sind ‒ und dies auf eine lange Zeit hinaus. Als kleinen Trost sollen sie ein kleines Computerspiel bekommen, das im Rahmen dieses Projekts konzipiert und entwickelt wird. Dabei handelt es sich um eine erweiterte Version des Spiels «Vier Gewinnt».\footnote{\url{https://de.wikipedia.org/wiki/Vier_gewinnt}}
+Systemadministratoren (kurz: Sysadmins) haben es nicht einfach zu Zeiten der Corona-Krise: Ins Home-Office verbannt sind sie teilweise ihrer letzten sozialen Kontakte beraubt, zumal \textit{Star Wars}-Conventions und andere Veranstaltungen für Nerds alle abgesagt worden sind ‒ und dies auf eine lange Zeit hinaus. Als kleinen Trost sollen sie ein kleines Computerspiel bekommen, das im Rahmen dieses Projekts konzipiert und entwickelt wird. Dabei handelt es sich um eine erweiterte Version des Spiels «Vier Gewinnt» (siehe \imgref{fig:vier-gewinnt}).
 
-Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmin werden im Rahmen der vorliegenden Arbeit nur die Mitglieder der höchsten Kaste bezeichnet ‒ die Unix-Systemadministratoren. Auf die Bedürfnisse der Angehörigen tieferer Kasten soll hier nicht eingegangen werden.} Das herkömmliche «Vier Gewinnt» ist ihnen zu langweilig, zumal sie sämtliche Speilverläufe schon längst nachtsüber auf einem ihrer High-End-Server durchgerechnet haben. Zudem ist ihnen nach Spielende das lästige Sortieren der Steine nach Farben, das beim «Vier Gewinnt» im Meatspace nötig ist, ein Graus, zumal Sysadmins solche mechanischen Abläufe lieber automatisieren. Ausserdem lassen sich die Spielverläufe beim physischen Spiel nur sehr umständlich und schlecht maschinenlesbar festhalten, etwa mittels Fotokamera.
+Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmins werden im Rahmen der vorliegenden Arbeit nur die Mitglieder der höchsten Kaste bezeichnet ‒ die Unix-Systemadministratoren. Auf die Bedürfnisse der Angehörigen tieferer Kasten soll hier nicht eingegangen werden.} Das herkömmliche «Vier Gewinnt» ist ihnen zu langweilig, zumal sie sämtliche Speilverläufe schon längst nachtsüber auf einem ihrer High-End-Server durchgerechnet haben. Zudem ist ihnen nach Spielende das lästige Sortieren der Steine nach Farben, das beim «Vier Gewinnt» im Meatspace nötig ist, ein Graus, zumal Sysadmins solche mechanischen Abläufe lieber automatisieren. Ausserdem lassen sich die Spielverläufe beim physischen Spiel nur sehr umständlich und schlecht maschinenlesbar festhalten, etwa mittels Fotokamera.
 
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{pics/vier-gewinnt.jpg}
     \caption{Das klassische «Vier Gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
+    \label{fig:vier-gewinnt}
 \end{figure}
 
 «Vier Gewinnt» wäre viel besser, wenn man es auf der Kommandozeile spielen könnte! Dies hätte folgende Vorteile gegenüber der herkömmlichen Meatspace-Version:
@@ -93,7 +94,7 @@ Als nächstes ist eine gemeinsame Benutzergruppe und je ein Benutzer für die be
 # passwd poke
 \end{lstlisting}
 
-Das \texttt{\$HOME}-Verzeichnis, das über das \texttt{-m}-Flag erstellt wird, ist wichtig, da die beiden Spieler ihre Spielverläufe ja schliesslich in Textdateien festhalten wollen, vorzugsweise mit \texttt{ed(1)}, dem Standard-Texteditor von Unix.
+Das \texttt{\$HOME}-Verzeichnis, das über das \texttt{-m}-Flag erstellt wird, ist wichtig, da die beiden Spieler ihre Spielverläufe ja schliesslich in Textdateien festhalten und kommentieren wollen ‒ letzteres vorzugsweise mit \texttt{ed(1)}, dem Standard-Texteditor von Unix.
 
 Nun kann sich der erste Benutzer (\texttt{geek}) auf dem Server einloggen und eine neue \texttt{tmux}-Session namens \texttt{game} eröffnen:
 
