@@ -13,6 +13,7 @@
 \pagestyle{headings}
 
 \newcommand{\imgref}[1]{{Abbildung \ref{#1}, Seite \pageref{#1}}}
+\lstset{basicstyle=\ttfamily}
 
 \begin{document}
 
@@ -24,12 +25,24 @@
 \thispagestyle{empty}
 
 \begin{center}
-    \includegraphics[width=0.5\linewidth]{pics/title.png}
+    %\includegraphics[width=0.5\linewidth]{pics/title.png}
+    \begin{lstlisting}
+    1 2 3 4 5 6 7                     1 2 3 4 5 6 7
+    _ _ _ _ _ _ _                     _ _ _ _ _ _ _
+    _ _ _ _ _ _ _                     _ _ _ _ _ _ _
+    _ _ _ _ _ _ _                     _ _ _ _ O _ _
+    _ _ _ o x o _                     _ _ _ O x o _
+    _ x o o x x _                     _ x O o x x _
+    _ o x x o x _                     _ O x x o x _
+
+    Player 2 [o] (1 to 7): 5          Player 2 [O] has won!
+    \end{lstlisting}
 \end{center}
-%\newpage
 
 \section*{Abstract}
-Bla bla bla...
+
+«Vier Gewinnt» ist ein weit verbreitetes und bekanntes Strategiespiel für zwei Personen, bei der es darum geht, vier Spielsteine auf einem 7x6-Raster in eine horizontale, vertikele oder diagonale Reihe zu bringen. Zu Zeiten der Corona-Krise lässt sich das Spiel schlecht in physischer Gegenwart an einem Tisch spielen. Ausserdem schaffen die altbekannten Spielregeln und -mechaniken kaum noch einen Anreiz für das Spiel. In der vorliegenden Arbeit soll das Spiel «Vier Gewinnt» mit neuen Mechaniken interessanter und besonders auf die Personengruppe der Systemadministratoren angepasst werden, die das Spiel lieber auf der Kommandozeile als in der physichen Version spielen.
+
 \newpage
 
 \tableofcontents
@@ -43,8 +56,8 @@ Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmin werden im Rahmen d
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\linewidth]{pics/vier-gewinnt.jpg}
-    \caption{Das klassische «Vier Gewinnt» (\textit{Meatspace}-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
+    \includegraphics[width=1.0\linewidth]{pics/vier-gewinnt.jpg}
+    \caption{Das klassische «Vier Gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
 \end{figure}
 
 «Vier Gewinnt» wäre viel besser, wenn man es auf der Kommandozeile spielen könnte! Dies hätte folgende Vorteile gegenüber der herkömmlichen Meatspace-Version:
@@ -59,6 +72,48 @@ Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmin werden im Rahmen d
 Das klassische «Vier Gewinnt» müsste hierzu natürlich noch etwas interessanter ausgestaltet werden, sodass die Motivation der Sysadmins zumindest das Warten auf den nächsten Download auf den derzeit chronisch überlasteten Steam-Servern überdauert. Diese möglichen Verbesserungen sollen im Rahmen dieser Arbeit vorgeschlagen, umgesetzt und evaluiert werden.
 
 \subsection{Zwei Tastaturen, eine Kommandozeile}
+
+Um das Treffen zweier Sysadmins auf einem gemeinsamen Terminal, das für die Evaluation des Prototyps nötig ist, zu bewerkstelligen, muss ein gemeinsam zugänglicher Server zuerst entsprechend konfiguriert werden.\footnote{Server können von HSLU-Studierenden kostenlos und unkompliziert im \textit{Enterprise Lab} bezogen werden. Diese dürften knapp genügend Leistung aufbringen, um eine Anbindung mit einer Baudrate von 9600 über längere Zeit zu gewährleisten. Mit neueren Versionen von Solaris dürfte sich auch \texttt{tmux} einfach installieren lassen (siehe \url{https://www.opencsw.org/packages/tmux/}).}
+
+Sollte wider aller Erwartung kein Solaris, sondern ein Debian-basiertes Betriebssystem auf dem Server installiert sein, lässt sich die gemeinsame Spielumgebung mit den folgenden Schritten einrichten.
+
+Zunächst muss \texttt{tmux} installiert werden:
+
+\begin{lstlisting}
+# apt-get install tmux
+\end{lstlisting}
+
+Als nächstes ist eine gemeinsame Benutzergruppe und je ein Benutzer für die beiden Spieler (\texttt{geek} und \texttt{poke}) zu erstellen. Auch müssen den neu erstellen Benutzern gleich Passwörter hinterlegt werden:
+
+\begin{lstlisting}
+# groupadd sysadmins
+# useradd -G sysadmins -m geek
+# useradd -G sysadmins -m poke
+# passwd geek
+# passwd poke
+\end{lstlisting}
+
+Das \texttt{\$HOME}-Verzeichnis, das über das \texttt{-m}-Flag erstellt wird, ist wichtig, da die beiden Spieler ihre Spielverläufe ja schliesslich in Textdateien festhalten wollen, vorzugsweise mit \texttt{ed(1)}, dem Standard-Texteditor von Unix.
+
+Nun kann sich der erste Benutzer (\texttt{geek}) auf dem Server einloggen und eine neue \texttt{tmux}-Session namens \texttt{game} eröffnen:
+
+\begin{lstlisting}
+[geek]$ tmux -S /tmp/shared new -s game
+\end{lstlisting}
+
+Die Session muss so berechtigt werden, dass alle Benutzer der Gruppe \texttt{sysadmins} darauf zugreifen können:
+
+\begin{lstlisting}
+[geek]$ chgrp sysadmins /tmp/shared
+\end{lstlisting}
+
+Anschliessend kann sich der zweite Benutzer (\texttt{poke}) einloggen und an der bestehenden \texttt{tmux}-Session teilnehmen:
+
+\begin{lstlisting}
+[poke]$ tmux -S /tmp/shared attach -t game
+\end{lstlisting}
+
+Jetzt benötigen die beiden Spieler bloss noch ein Spiel, und der Spass kann auf einer tiefen Bandbreite beginnen!
 
 \newpage
 
