@@ -19,7 +19,7 @@
 
 \author{Patrick Bucher}
 \title{v13r g3w1nn7}
-\subtitle{Gamedesign-Portfolio: Vier Gewinnt für Sysadmins}
+\subtitle{Gamedesign-Portfolio: Vier gewinnt für Sysadmins}
 \date{\today}
 \maketitle
 \thispagestyle{empty}
@@ -41,7 +41,7 @@
 
 \section*{Abstract}
 
-«Vier Gewinnt» ist ein weit verbreitetes und bekanntes Strategiespiel für zwei Personen, bei der es darum geht, vier Spielsteine auf einem 7x6-Raster in eine horizontale, vertikele oder diagonale Reihe zu bringen. Zu Zeiten der Corona-Krise lässt sich das Spiel schlecht in physischer Gegenwart an einem Tisch spielen. Ausserdem schaffen die altbekannten Spielregeln und -mechaniken kaum noch einen Anreiz für das Spiel. In der vorliegenden Arbeit soll das Spiel «Vier Gewinnt» mit neuen Mechaniken interessanter und besonders auf die Personengruppe der Systemadministratoren angepasst werden, die das Spiel lieber auf der Kommandozeile als in der physichen Version spielen.
+«Vier gewinnt» ist ein weit verbreitetes und bekanntes Strategiespiel für zwei Personen, bei der es darum geht, vier Spielsteine auf einem 7x6-Raster in eine horizontale, vertikele oder diagonale Reihe zu bringen. Zu Zeiten der Corona-Krise lässt sich das Spiel schlecht in physischer Gegenwart an einem Tisch spielen. Ausserdem schaffen die altbekannten Spielregeln und -mechaniken kaum noch einen Anreiz für das Spiel. In der vorliegenden Arbeit soll das Spiel «Vier gewinnt» mit neuen Mechaniken interessanter und besonders auf die Personengruppe der Systemadministratoren angepasst werden, die das Spiel lieber auf der Kommandozeile als in der physichen Version spielen.
 
 \newpage
 
@@ -50,27 +50,27 @@
 
 \section{Erste Iteration: Zieldefinition und Konzept}
 
-Systemadministratoren (kurz: Sysadmins) haben es nicht einfach zu Zeiten der Corona-Krise: Ins Home-Office verbannt sind sie teilweise ihrer letzten sozialen Kontakte beraubt, zumal \textit{Star Wars}-Conventions und andere Veranstaltungen für Nerds alle abgesagt worden sind ‒ und dies auf eine lange Zeit hinaus. Als kleinen Trost sollen sie ein kleines Computerspiel bekommen, das im Rahmen dieses Projekts konzipiert und entwickelt wird. Dabei handelt es sich um eine erweiterte Version des Spiels «Vier Gewinnt» (siehe \imgref{fig:vier-gewinnt}).
+Systemadministratoren (kurz: Sysadmins) haben es nicht einfach zu Zeiten der Corona-Krise: Ins Home-Office verbannt sind sie teilweise ihrer letzten sozialen Kontakte beraubt, zumal \textit{Star Wars}-Conventions und andere Veranstaltungen für Nerds alle abgesagt worden sind ‒ und dies auf eine lange Zeit hinaus. Als kleinen Trost sollen sie ein kleines Computerspiel bekommen, das im Rahmen dieses Projekts konzipiert und entwickelt wird. Dabei handelt es sich um eine erweiterte Version des Spiels «Vier gewinnt» (siehe \imgref{fig:vier-gewinnt}).
 
-Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmins werden im Rahmen der vorliegenden Arbeit nur die Mitglieder der höchsten Kaste bezeichnet ‒ die Unix-Systemadministratoren. Auf die Bedürfnisse der Angehörigen tieferer Kasten soll hier nicht eingegangen werden.} Das herkömmliche «Vier Gewinnt» ist ihnen zu langweilig, zumal sie sämtliche Speilverläufe schon längst nachtsüber auf einem ihrer High-End-Server durchgerechnet haben. Zudem ist ihnen nach Spielende das lästige Sortieren der Steine nach Farben, das beim «Vier Gewinnt» im Meatspace nötig ist, ein Graus, zumal Sysadmins solche mechanischen Abläufe lieber automatisieren. Ausserdem lassen sich die Spielverläufe beim physischen Spiel nur sehr umständlich und schlecht maschinenlesbar festhalten, etwa mittels Fotokamera.
+Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmins werden im Rahmen der vorliegenden Arbeit nur die Mitglieder der höchsten Kaste bezeichnet ‒ die Unix-Systemadministratoren. Auf die Bedürfnisse der Angehörigen tieferer Kasten soll hier nicht eingegangen werden.} Das herkömmliche «Vier gewinnt» ist ihnen zu langweilig, zumal sie sämtliche Speilverläufe schon längst nachtsüber auf einem ihrer High-End-Server durchgerechnet haben. Zudem ist ihnen nach Spielende das lästige Sortieren der Steine nach Farben, das beim «Vier gewinnt» im Meatspace nötig ist, ein Graus, zumal Sysadmins solche mechanischen Abläufe lieber automatisieren. Ausserdem lassen sich die Spielverläufe beim physischen Spiel nur sehr umständlich und schlecht maschinenlesbar festhalten, etwa mittels Fotokamera.
 
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{pics/vier-gewinnt.jpg}
-    \caption{Das klassische «Vier Gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
+    \caption{Das klassische «Vier gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
     \label{fig:vier-gewinnt}
 \end{figure}
 
-«Vier Gewinnt» wäre viel besser, wenn man es auf der Kommandozeile spielen könnte! Dies hätte folgende Vorteile gegenüber der herkömmlichen Meatspace-Version:
+«Vier gewinnt» wäre viel besser, wenn man es auf der Kommandozeile spielen könnte! Dies hätte folgende Vorteile gegenüber der herkömmlichen Meatspace-Version:
 
 \begin{enumerate}
     \item Das Spiel könnte während der Arbeitszeit gespielt werden, ohne dass der gelegentlich vorbei- und in den Bildschirm schauende Vorgesetzte diese Strategie der Arbeitsvermeidung als solche erkennen könnte. Schliesslich handelt es sich ja bloss um irgendwelche kryptisch anmutende Zeichen, die da auf dem Bildschirm zu sehen sind. Bestimmt hat der Sysadmin da einen Belegungsplan für Pins oder dergleichen auf dem Bildschirm, und selbstverständlich handelt es sich dabei um geistige Schwerstarbeit, die dem Arbeitgeber zugute kommt ‒ das verrät schon des Sysadmins angestrengter Gesichtsausdruck!
-    \item Die Aufforderung der Geschäftsleitung, mehr zu kommunizieren und sich Probleme gemeinsam anzuschauen, könnte für weitere Arbeitsvermeidung ausgenutzt werden, indem sich zwei Sysadmins am gleichen Computer treffen, um dort «Vier Gewinnt» (bzw. \texttt{v13r g3w1nnt!!!11}) zu spielen. Die kryptisch anmutende Pin-Be\-le\-gung, die da für den Vorgesetzten auf dem Bildschirm zu sehen ist, schreit ja geradezu nach einer \textit{Pair Debugging Session}! So kann die Arbeitszeit weiter mit «Vier Gewinnt» vertrödelt werden, und die sozialen Kontakte der Firma werden dadurch noch weiter gestärkt ‒ ganz im Sinne der Geschäftsleitung!
+    \item Die Aufforderung der Geschäftsleitung, mehr zu kommunizieren und sich Probleme gemeinsam anzuschauen, könnte für weitere Arbeitsvermeidung ausgenutzt werden, indem sich zwei Sysadmins am gleichen Computer treffen, um dort «Vier gewinnt» (bzw. \texttt{v13r g3w1nnt!!!11}) zu spielen. Die kryptisch anmutende Pin-Be\-le\-gung, die da für den Vorgesetzten auf dem Bildschirm zu sehen ist, schreit ja geradezu nach einer \textit{Pair Debugging Session}! So kann die Arbeitszeit weiter mit «Vier gewinnt» vertrödelt werden, und die sozialen Kontakte der Firma werden dadurch noch weiter gestärkt ‒ ganz im Sinne der Geschäftsleitung!
     \item Da solche sozialen Interaktionen im Meatspace derzeit wegen \textit{Social Distancing} kaum denkbar sind, müsste das Spiel auch remote von zwei Sysadmins spielbar sein, ohne dass die Nerds der Softwareentwicklung das Spiel aufwändig umprogrammieren müssen. So könnten die Sysadmins das Spiel von zu Hause aus über eine gemeinsame Session mit \texttt{tmux} oder GNU \texttt{screen} gegeneinander spielen. Dies dürfte auch die VPN-Verbindung ins Büro nicht weiter beeinträchtigen, zumal diese schon durch BitTorrent-Downloads voll ausgelastet ist. Der Multiplayer-Modus wäre somit auch über eine serielle Verbindung möglich, die der erfahrene Sysadmin notfalls auch aus im Büro gestohlenen Büroklammern und aus abgerissenen Streifen seines Aluhuts herstellen könnte. Sollte der Bildschirm des Sysadmins unerwartet in die Brüche gehen, wäre das Spiel immer noch über einen Fernschreiber spielbar, der sich bei jedem guten Systemadmin im Keller finden lässt.\footnote{In der Regel hinter der Kiste mit den \textit{Star Trek}-Fanartikeln.}
     \item Die Spielverläufe können einfach in Textdateien\footnote{d.h. MIME-Type \texttt{text/html;charset=utf-8}, selbstverständlich ohne \textit{byte order mark} (BOM)} festgehalten werden. Das erleichtert die Diskussion über Spielstrategien auf dem Usenet und in IRC.
 \end{enumerate}
 
-Das klassische «Vier Gewinnt» müsste hierzu natürlich noch etwas interessanter ausgestaltet werden, sodass die Motivation der Sysadmins zumindest das Warten auf den nächsten Download auf den derzeit chronisch überlasteten Steam-Servern überdauert. Diese möglichen Verbesserungen sollen im Rahmen dieser Arbeit vorgeschlagen, umgesetzt und evaluiert werden.
+Das klassische «Vier gewinnt» müsste hierzu natürlich noch etwas interessanter ausgestaltet werden, sodass die Motivation der Sysadmins zumindest das Warten auf den nächsten Download auf den derzeit chronisch überlasteten Steam-Servern überdauert. Diese möglichen Verbesserungen sollen im Rahmen dieser Arbeit vorgeschlagen, umgesetzt und evaluiert werden.
 
 \subsection{Zwei Tastaturen, eine Kommandozeile}
 
@@ -119,6 +119,26 @@ Jetzt benötigen die beiden Spieler bloss noch ein Spiel, und der Spass kann auf
 \newpage
 
 \section{Zweite Iteration: Anwendung von Game-Design-Theorie}
+
+\subsection{Entscheidungen}
+
+Verschiedene Spiele lassen verschiedene Arten von Entscheidungen zu. Bei einfachen Spielen hat man es v.a. mit uninteressanten Entscheidungen zu tun. Diese lassen sich in die folgenden Kategorien aufteilen:
+
+\begin{description}
+    \item[Keine Entscheidungen] Das Würfeln bei einem Leiterlispiel ist keine Entscheidung, da hier der Zufall regiert. Bei jeder Runde muss gewürfelt werden, der Spieler kann darüber nicht entscheiden.
+    \item[Bedeutungslose Entscheidungen] Das Tippen auf Kopf oder Zahl beim Münzwurf ist eine bedeutungslose Entscheidung. Es muss eine Entscheidung getroffen werden, die das Spielergebnis aber nicht beeinflusst, bzw. vom Glück abhängig ist.
+    \item[Offensichtliche Entscheidungen] Das setzen eines Steines in «Vier gewinnt» ist eine offensichtliche Entscheidung. Aus der Spielmechanik geht etwa klar hervor, welche Eröffnungszüge sinnvoll sind (in der Mitte spielen), oder welche Züge den Spieler dem Sieg näherbringen (Einreihung von Steinen).
+    \item[Blinde Entscheidungen] Das Wählen einer Koordinate beim «Schiffe versenken» läuft zumeist blind ab, da man das Spielfeld des Gegners nicht kennt. Im Verlauf des Spiels erhält man jedoch immer ein besseres Bild vom Spielfeld des Gegners, sodass in manchen Spielsituationen das Versenken von grossen Schiffen zu einer offensichtlichen Entscheidung werden kann.
+\end{description}
+
+Beim Spiel «Vier gewinnt» hat man es mit offensichtlichen Entscheidungen zu tun. Umd as Spiel interessanter zu machen, muss es interessante Entscheidungen zulassen.
+
+Interessante Entscheidungen unterscheiden sich von uninteressanten Enscheidungen u.a. dadurch, dass mit ihnen ein gewisses Risiko einhergeht, das sich nicht oder nur begrenzt abschätzen lässt. Oft wirken sich risikoreiche Entscheidungen nicht schon unmittelbar nach der Entscheidung, sondern erst später auf den Spielverlauf aus.
+
+Bei «Vier gewinnt» steht dem Spieler nur eine Art von Auswahl zur Verfügung: Die Wahl des Schachts, in der ein Stein eingeworfen werden soll. Das Spiel kann dann interessanter werden, wenn andere Arten von Entscheidungen angeboten werden. Je nach Spielsituation wäre dann eine andere Art der Entscheidung angebracht.
+
+\subsection{Balancing}
+
 \newpage
 
 \begin{figure}
