@@ -9,6 +9,18 @@ PLAYER_TWO = 2
 
 FIELD_VALUES = [EMPTY, PLAYER_ONE, PLAYER_TWO]
 
+SHIFTS = {
+    # direction: (row shift, col shift)
+    'north': (-1, 0),
+    'north_east': (-1, 1),
+    'east': (0, 1),
+    'south_east': (1, 1),
+    'south': (1, 0),
+    'south_west': (1, -1),
+    'west': (0, -1),
+    'north_west': (-1, -1),
+}
+
 
 class Board:
 
@@ -49,3 +61,38 @@ class Board:
         new_b = np.copy(self.b)
         new_b[row_index, move] = player
         return Board(new_b)
+
+    def wins(self):
+        # Rotating the field could result in multiple wins. The winning fields
+        # should also be highlighted and are therefore returned.
+        four_in_a_row = {
+            PLAYER_ONE: [],
+            PLAYER_TWO: [],
+        }
+        for row in range(self.b.shape[0]):
+            for col in range(self.b.shape[1]):
+                player = self.b[row, col]
+                if player == EMPTY:
+                    continue
+                for direction in SHIFTS.values():
+                    win_indices = self.is_win(player, (row, col), direction)
+                    if win_indices:
+                        if sorted(win_indices) in four_in_a_row[player]:
+                            continue
+                        four_in_a_row[player].append(sorted(win_indices))
+        four_in_a_row[PLAYER_ONE] = sorted(four_in_a_row[PLAYER_ONE])
+        four_in_a_row[PLAYER_TWO] = sorted(four_in_a_row[PLAYER_TWO])
+        return four_in_a_row
+
+    def is_win(self, player, orig, direction):
+        matches = []
+        row, col = orig[0], orig[1]
+        while 0 <= row < self.b.shape[0] and 0 <= col < self.b.shape[1]:
+            if self.b[row, col] == player:
+                matches.append((row, col))
+            else:
+                return None
+            if len(matches) >= 4:
+                return matches
+            row, col = row + direction[0], col + direction[1]
+        return None
