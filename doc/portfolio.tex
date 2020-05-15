@@ -118,6 +118,14 @@ Anschliessend kann sich der zweite Benutzer (\texttt{poke}) einloggen und an der
 
 Jetzt benötigen die beiden Spieler bloss noch ein Spiel, und der Spass kann auf einer tiefen Bandbreite beginnen!
 
+\subsection{Prototyp für «Vier gewinnt»}
+
+In dieser ersten Iteration soll nur das herkömmliche «Vier gewinnt»-Spiel zum Einsatz kommen. Dieses muss zunächst in einer Kommandozeilenversion entwickelt werden.
+
+Als die Umsetzungsplattform für den Prototypen soll Python 3\footnote{\url{https://www.python.org/}} verwendet werden. Mit dieser Programmiersprache hat der Autor dieser Arbeit einiges an positiver Erfahrung sammeln können. Ausserdem verfügt Python mit NumPy\footnote{\url{https://numpy.org/}} über eine mächtige Library für (mehrdimensionale) Arrays, mit der sich viele Listenoperationen mit wenig Code und effizient umsetzen lassen.\footnote{Selbstverständlich würde für die richtige Version des Spiels eine Programmiersprache verwendet werden, die eine höhere Laufzeitperformance bei geringerem Speicherverbrauch ermöglicht, wie z.B. C, Assembler oder Fortran. Im Rahmen dieser Arbeit handelt es sich aber nur um einen Prototyp.}
+
+Die Spiellogik soll mithilfe von pytest\footnote{\url{https://docs.pytest.org/en/latest/}} automatisiert getestet werden. Auch wenn es sich nur um einen Prototyp handelt, ist die Korrektheit der Spiellogik ein wichtiger Faktor, zumal nicht erkannte Gewinnsituationen für die Beteiligten sehr frustrierend sind, was einen negativen Einfluss auf die Testläufe hätte.
+
 \newpage
 
 \section{Zweite Iteration: Anwendung von Game-Design-Theorie}
