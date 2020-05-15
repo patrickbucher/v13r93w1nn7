@@ -33,3 +33,19 @@ class Board:
 
     def cols(self):
         return self.b.shape[1]
+
+    def as_list(self):
+        return self.b.tolist()
+
+    def valid_moves(self):
+        empty_at = np.argwhere(self.b[0] == EMPTY).flatten()
+        return empty_at.tolist()
+
+    def apply_move(self, player, move):
+        if move not in self.valid_moves():
+            raise ValueError(f'{move} is not a valid move')
+        col = self.b.transpose()[move]
+        row_index = np.amax(np.argwhere(col == EMPTY).flatten())
+        new_b = np.copy(self.b)
+        new_b[row_index, move] = player
+        return Board(new_b)
