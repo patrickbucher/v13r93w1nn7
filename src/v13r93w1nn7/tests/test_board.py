@@ -356,7 +356,4 @@ def test_apply_invalid_move(before, player, move):
 ])
 def test_wins(l, expected):
     b = board.Board.from_list(l)
-    got = b.wins()
-    print('e', expected)
-    print('g', got)
-    assert got == expected
+    expected == b.wins()
