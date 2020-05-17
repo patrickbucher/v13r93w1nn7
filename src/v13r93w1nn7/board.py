@@ -31,13 +31,14 @@ class Board:
             self.b = np.zeros((ROWS, COLS), dtype=np.byte)
 
     @staticmethod
-    def from_list(l):
+    def from_list(l, validate=True):
         np_arr = np.array(l)
-        if np_arr.shape[0] != ROWS or np_arr.shape[1] != COLS:
-            raise ValueError(f'shape must be {ROWS}x{COLS}')
-        ok = np.all(np.isin(np_arr, FIELD_VALUES))
-        if not ok:
-            raise ValueError(f'only values {FIELD_VALUES} allowed')
+        if validate:
+            if np_arr.shape[0] != ROWS or np_arr.shape[1] != COLS:
+                raise ValueError(f'shape must be {ROWS}x{COLS}')
+            ok = np.all(np.isin(np_arr, FIELD_VALUES))
+            if not ok:
+                raise ValueError(f'only values {FIELD_VALUES} allowed')
         return Board(b=np_arr)
 
     def rows(self):
@@ -61,6 +62,9 @@ class Board:
         new_b = np.copy(self.b)
         new_b[row_index, move] = player
         return Board(new_b)
+
+    def is_draw(self):
+        return not np.any(self.b == EMPTY)
 
     def wins(self):
         # Rotating the field could result in multiple wins. The winning fields
@@ -97,18 +101,27 @@ class Board:
             row, col = row + direction[0], col + direction[1]
         return None
 
-    def draw(self, indent='\t', p1='x', p2='o', empty='_'):
-        output = ''
+    def draw(self, indent='\t', p1='x', p2='o',
+             empty='_', illegal='?', slotnums=False):
         fields = {
             EMPTY: empty,
             PLAYER_ONE: p1,
             PLAYER_TWO: p2,
         }
+        output = ''
+        if slotnums:
+            slots = [i for i in range(1, self.cols() + 1)]
+            line = indent
+            for slot in slots:
+                line += f'{slot} '
+            output += line.rstrip() + '\n'
         for r in range(self.rows()):
             line = indent
             for c in range(self.cols()):
-                f = fields[self.b[r, c]]
-                line += f'{f} '
-            output += line.rstrip()
-            output += '\n'
+                if self.b[r, c] in fields:
+                    f = fields[self.b[r, c]]
+                    line += f'{f} '
+                else:
+                    line += f'{illegal} '
+            output += line.rstrip() + '\n'
         return output

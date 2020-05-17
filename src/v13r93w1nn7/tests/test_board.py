@@ -273,6 +273,53 @@ def test_apply_invalid_move(before, player, move):
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
+        ], False
+    ),
+    (
+        [
+            [0, 0, 0, 0, 0, 0, 0],
+            [2, 1, 2, 1, 2, 1, 2],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [2, 1, 2, 1, 2, 1, 2],
+        ], False
+    ),
+    (
+        [
+            [1, 2, 1, 0, 1, 2, 2],
+            [2, 1, 2, 1, 2, 1, 2],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [2, 1, 2, 1, 2, 1, 2],
+        ], False
+    ),
+    (
+        [
+            [1, 2, 1, 2, 1, 2, 2],
+            [2, 1, 2, 1, 2, 1, 2],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [1, 2, 1, 2, 1, 2, 1],
+            [2, 1, 2, 1, 2, 1, 2],
+        ], True
+    ),
+])
+def test_is_draw(l, expected):
+    b = board.Board.from_list(l)
+    assert b.is_draw() == expected
+
+
+@pytest.mark.parametrize('l,expected', [
+    (
+        [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
         ],
         {
             1: [],
@@ -359,7 +406,7 @@ def test_wins(l, expected):
     expected == b.wins()
 
 
-@pytest.mark.parametrize('l,indent,p1,p2,empty,expected', [
+@pytest.mark.parametrize('l,indent,p1,p2,empty,slotnums,expected', [
     (
         [
             [0, 0, 0, 0, 0, 0, 0],
@@ -368,12 +415,13 @@ def test_wins(l, expected):
             [0, 1, 0, 0, 0, 0, 0],
             [0, 2, 1, 2, 0, 0, 0],
             [0, 1, 2, 1, 1, 2, 0],
-        ], ' ', 'x', 'o', '_',
-        ' _ _ _ _ _ _ _\n' +\
-        ' _ _ _ _ _ _ _\n' +\
-        ' _ _ _ _ _ _ _\n' +\
-        ' _ x _ _ _ _ _\n' +\
-        ' _ o x o _ _ _\n' +\
+        ], ' ', 'x', 'o', '_', True,
+        ' 1 2 3 4 5 6 7\n' +
+        ' _ _ _ _ _ _ _\n' +
+        ' _ _ _ _ _ _ _\n' +
+        ' _ _ _ _ _ _ _\n' +
+        ' _ x _ _ _ _ _\n' +
+        ' _ o x o _ _ _\n' +
         ' _ x o x x o _\n'
     ),
     (
@@ -384,15 +432,20 @@ def test_wins(l, expected):
             [0, 1, 0, 0, 0, 0, 0],
             [0, 2, 1, 2, 0, 0, 0],
             [0, 1, 2, 1, 1, 2, 0],
-        ], '\t', '#', '@', '-',
-        '\t- - - - - - -\n' +\
-        '\t- - - - - - -\n' +\
-        '\t- - - - - - -\n' +\
-        '\t- # - - - - -\n' +\
-        '\t- @ # @ - - -\n' +\
+        ], '\t', '#', '@', '-', False,
+        '\t- - - - - - -\n' +
+        '\t- - - - - - -\n' +
+        '\t- - - - - - -\n' +
+        '\t- # - - - - -\n' +
+        '\t- @ # @ - - -\n' +
         '\t- # @ # # @ -\n'
     ),
 ])
-def test_draw(l, indent, p1, p2, empty, expected):
+def test_draw(l, indent, p1, p2, empty, slotnums, expected):
     b = board.Board.from_list(l)
-    assert expected == b.draw(indent=indent, p1=p1, p2=p2, empty=empty)
+    assert expected == b.draw(
+        indent=indent,
+        p1=p1,
+        p2=p2,
+        empty=empty,
+        slotnums=slotnums)
