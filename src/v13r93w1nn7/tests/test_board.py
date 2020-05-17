@@ -357,3 +357,42 @@ def test_apply_invalid_move(before, player, move):
 def test_wins(l, expected):
     b = board.Board.from_list(l)
     expected == b.wins()
+
+
+@pytest.mark.parametrize('l,indent,p1,p2,empty,expected', [
+    (
+        [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 2, 1, 2, 0, 0, 0],
+            [0, 1, 2, 1, 1, 2, 0],
+        ], ' ', 'x', 'o', '_',
+        ' _ _ _ _ _ _ _\n' +\
+        ' _ _ _ _ _ _ _\n' +\
+        ' _ _ _ _ _ _ _\n' +\
+        ' _ x _ _ _ _ _\n' +\
+        ' _ o x o _ _ _\n' +\
+        ' _ x o x x o _\n'
+    ),
+    (
+        [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 2, 1, 2, 0, 0, 0],
+            [0, 1, 2, 1, 1, 2, 0],
+        ], '\t', '#', '@', '-',
+        '\t- - - - - - -\n' +\
+        '\t- - - - - - -\n' +\
+        '\t- - - - - - -\n' +\
+        '\t- # - - - - -\n' +\
+        '\t- @ # @ - - -\n' +\
+        '\t- # @ # # @ -\n'
+    ),
+])
+def test_draw(l, indent, p1, p2, empty, expected):
+    b = board.Board.from_list(l)
+    assert expected == b.draw(indent=indent, p1=p1, p2=p2, empty=empty)

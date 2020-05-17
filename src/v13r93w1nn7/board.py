@@ -96,3 +96,19 @@ class Board:
                 return matches
             row, col = row + direction[0], col + direction[1]
         return None
+
+    def draw(self, indent='\t', p1='x', p2='o', empty='_'):
+        output = ''
+        fields = {
+            EMPTY: empty,
+            PLAYER_ONE: p1,
+            PLAYER_TWO: p2,
+        }
+        for r in range(self.rows()):
+            line = indent
+            for c in range(self.cols()):
+                f = fields[self.b[r, c]]
+                line += f'{f} '
+            output += line.rstrip()
+            output += '\n'
+        return output
