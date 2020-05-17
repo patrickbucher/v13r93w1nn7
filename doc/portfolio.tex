@@ -3,6 +3,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{fontspec}
     \setmainfont{Vollkorn}
@@ -27,15 +28,15 @@
 \begin{center}
     %\includegraphics[width=0.5\linewidth]{pics/title.png}
     \begin{lstlisting}
-    1 2 3 4 5 6 7                     1 2 3 4 5 6 7
-    _ _ _ _ _ _ _                     _ _ _ _ _ _ _
-    _ _ _ _ _ _ _                     _ _ _ _ _ _ _
-    _ _ _ _ _ _ _                     _ _ _ _ O _ _
-    _ _ _ o x o _                     _ _ _ O x o _
-    _ x o o x x _                     _ x O o x x _
-    _ o x x o x _                     _ O x x o x _
+        1 2 3 4 5 6 7                     1 2 3 4 5 6 7
+        _ _ _ _ _ _ _                     _ _ _ _ _ _ _
+        _ _ _ _ _ _ _                     _ _ _ _ _ _ _
+        _ _ _ _ _ _ _                     _ _ _ _ O _ _
+        _ _ _ o x o _                     _ _ _ O x o _
+        _ x o o x x _                     _ x O o x x _
+        _ o x x o x _                     _ O x x o x _
 
-    Player 2 [o] (1 to 7): 5          Player 2 [O] has won!
+  Player 2 [o] (1 to 7): 5          Player 2 has won the game.
     \end{lstlisting}
 \end{center}
 
@@ -120,11 +121,60 @@ Jetzt benötigen die beiden Spieler bloss noch ein Spiel, und der Spass kann auf
 
 \subsection{Prototyp für «Vier gewinnt»}
 
-In dieser ersten Iteration soll nur das herkömmliche «Vier gewinnt»-Spiel zum Einsatz kommen. Dieses muss zunächst in einer Kommandozeilenversion entwickelt werden.
+In dieser ersten Iteration soll nur das herkömmliche «Vier gewinnt»-Spiel zum Einsatz kommen. Dieses wird zunächst in einer Kommandozeilenversion entwickelt.
 
-Als die Umsetzungsplattform für den Prototypen soll Python 3\footnote{\url{https://www.python.org/}} verwendet werden. Mit dieser Programmiersprache hat der Autor dieser Arbeit einiges an positiver Erfahrung sammeln können. Ausserdem verfügt Python mit NumPy\footnote{\url{https://numpy.org/}} über eine mächtige Library für (mehrdimensionale) Arrays, mit der sich viele Listenoperationen mit wenig Code und effizient umsetzen lassen.\footnote{Selbstverständlich würde für die richtige Version des Spiels eine Programmiersprache verwendet werden, die eine höhere Laufzeitperformance bei geringerem Speicherverbrauch ermöglicht, wie z.B. C, Assembler oder Fortran. Im Rahmen dieser Arbeit handelt es sich aber nur um einen Prototyp.}
+Als Umsetzungsplattform für den Prototyp kommt Python 3 zum Einsatz. Mit dieser Programmiersprache hat der Autor dieser Arbeit bereits einiges an positiver Erfahrung sammeln können. Ausserdem verfügt Python mit NumPy\footnote{\url{https://numpy.org/}} über eine mächtige Library für (mehrdimensionale) Arrays, mit der sich viele Listenoperationen mit wenig Code und effizient umsetzen lassen.\footnote{Für die richtige Version des Spiels würde eine Programmiersprache verwendet werden, die eine höhere Laufzeitperformance bei geringerem Speicherverbrauch ermöglicht, wie z.B. ANSI C 89, Assembler oder Fortran 66, damit der Sysadmin sich nicht unnötig Rechenpower für das Bitcoin-Mining verliert.}
 
-Die Spiellogik soll mithilfe von pytest\footnote{\url{https://docs.pytest.org/en/latest/}} automatisiert getestet werden. Auch wenn es sich nur um einen Prototyp handelt, ist die Korrektheit der Spiellogik ein wichtiger Faktor, zumal nicht erkannte Gewinnsituationen für die Beteiligten sehr frustrierend sind, was einen negativen Einfluss auf die Testläufe hätte.
+Die Spiellogik wird mithilfe von pytest\footnote{\url{https://docs.pytest.org/en/latest/}} automatisiert getestet. Auch wenn es sich nur um einen Prototyp handelt, ist die Korrektheit der Spiellogik ein wichtiger Usability-Faktor, zumal nicht erkannte Gewinnsituationen für die Beteiligten sehr frustrierend sind, was einen negativen Einfluss auf die Testläufe hätte.
+
+Der Prototyp ist einfach zu bedienen und schliesst Fehleingaben so gut wie möglich aus. Das Folgende Kommandozeilenfenster zeigt den Prototyp während eines Spiels:
+
+\begin{lstlisting}
+        1 2 3 4 5 6 7
+        _ _ _ _ _ _ _
+        _ _ _ _ _ _ _
+        _ _ _ _ _ _ _
+        _ x _ _ o _ _
+        _ o x o o o x
+        _ x o x x x o
+
+Player 1 [x] (1 to 7): ¶
+\end{lstlisting}
+
+Das Spielfeld wird mit einem 7x6-Raster dargestellt. Der Underscore (\texttt{\_}) markiert dabei leere Felder. Spieler 1 spielt mit dem Spielstein \texttt{x}, und Spieler 2 mit dem Spielstein \texttt{o}. Die Titelzeile markiert die einzelnen Spalten (oder «Schächte») mit einer Nummer, sodass sich der Spieler beim Auswählen des Schachts einfacher orientieren kann.
+
+Das Paragraph-Zeichen (\texttt{¶}) markiert die Eingabeaufforderung. Der Spieler soll die Nummer des Schachts auswählen, in den sein Spielstein fallen soll. Falscheingaben (nicht numerische, nicht im Bereich 1-7, einen vollen Schacht bezeichnend usw.) werden nicht akzeptiert, sondern mit einer Fehlermeldung und einer erneuten Eingabeaufforderung quittiert:
+
+\begin{lstlisting}
+        1 2 3 4 5 6 7
+        _ _ _ _ x _ _
+        _ _ _ _ o _ _
+        _ _ _ _ x _ _
+        _ x _ _ o _ _
+        _ o x o o o x
+        _ x o x x x o
+
+Player 2 [o] (1 to 7): 5
+You must pick a free slot between 1 and 7!
+\end{lstlisting}
+
+Sind alle Spielfelder voll, ohne dass dabei ein Spieler die Siegbedingung (vier Spielsteine in einer horizontalen, vertikalen oder diagonalen Reihe) erfüllt, wird das Spiel als unentschieden gewertet. Erfüllt ein Spieler die Siegbedingung, ist das Spiel zu Ende und der Sieger wird als solcher ausgewiesen:
+
+\begin{lstlisting}
+        1 2 3 4 5 6 7
+        _ _ _ _ x _ _
+        _ _ _ _ o _ _
+        _ _ _ _ X _ _
+        _ x _ X o o _
+        _ o X o o o x
+        _ X o x x x o
+
+Player 1 has won the game.
+\end{lstlisting}
+
+Hierbei wird zur leichteren Erkennung die Siegreihe hervorgehoben, indem der Spielstein durch einen entsprechenden Grossbuchstaben ersetzt wird (\texttt{x} wird hier durch \texttt{X} ersetzt). Dies soll Diskussionen zwischen aufbegrachten Sysadmins verhindern, die ansonsten nur in die Richtung gehen würde, dass diese Software halt falsch programmiert worden sei ‒ und die Erkennung der Siegbedingung nicht ausreichend getestet.
+
+Das Spiel ist bereit für die erste Testreihe: Das Testen der Grundversion.
 
 \newpage
 
