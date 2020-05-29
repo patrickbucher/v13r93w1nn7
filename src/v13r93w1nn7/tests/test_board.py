@@ -9,7 +9,7 @@ def test_create_empty_board():
     assert b.cols() == board.COLS
 
 
-@pytest.mark.parametrize('l', [
+@pytest.mark.parametrize('lst', [
     [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -35,11 +35,11 @@ def test_create_empty_board():
         [0, 1, 2, 0, 1, 2, 0],
     ],
 ])
-def test_from_list(l):
-    board.Board.from_list(l)
+def test_from_list(lst):
+    board.Board.from_list(lst)
 
 
-@pytest.mark.parametrize('l', [
+@pytest.mark.parametrize('lst', [
     [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -57,13 +57,13 @@ def test_from_list(l):
         [0, 1, 2, 3, 0, 0, 0],  # error: 3
     ],
 ])
-def test_from_list_fail(l):
+def test_from_list_fail(lst):
     with pytest.raises(ValueError) as err:
-        board.Board.from_list(l)
+        board.Board.from_list(lst)
     assert 'only values [0, 1, 2] allowed' in str(err.value)
 
 
-@pytest.mark.parametrize('l,valid_moves', [
+@pytest.mark.parametrize('lst,valid_moves', [
     ([
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -113,8 +113,8 @@ def test_from_list_fail(l):
         [1, 1, 2, 1, 1, 2, 1],
     ], []),
 ])
-def test_valid_moves(l, valid_moves):
-    b = board.Board.from_list(l)
+def test_valid_moves(lst, valid_moves):
+    b = board.Board.from_list(lst)
     moves = b.valid_moves()
     assert moves == valid_moves
 
@@ -264,7 +264,7 @@ def test_apply_invalid_move(before, player, move):
     assert f'{move} is not a valid move' in str(err.value)
 
 
-@pytest.mark.parametrize('l,expected', [
+@pytest.mark.parametrize('lst,expected', [
     (
         [
             [0, 0, 0, 0, 0, 0, 0],
@@ -306,12 +306,12 @@ def test_apply_invalid_move(before, player, move):
         ], True
     ),
 ])
-def test_is_draw(l, expected):
-    b = board.Board.from_list(l)
+def test_is_draw(lst, expected):
+    b = board.Board.from_list(lst)
     assert b.is_draw() == expected
 
 
-@pytest.mark.parametrize('l,expected', [
+@pytest.mark.parametrize('lst,expected', [
     (
         [
             [0, 0, 0, 0, 0, 0, 0],
@@ -401,12 +401,12 @@ def test_is_draw(l, expected):
         },
     ),
 ])
-def test_wins(l, expected):
-    b = board.Board.from_list(l)
+def test_wins(lst, expected):
+    b = board.Board.from_list(lst)
     expected == b.wins()
 
 
-@pytest.mark.parametrize('l,indent,p1,p2,empty,slotnums,expected', [
+@pytest.mark.parametrize('lst,indent,p1,p2,empty,slotnums,expected', [
     (
         [
             [0, 0, 0, 0, 0, 0, 0],
@@ -441,8 +441,8 @@ def test_wins(l, expected):
         '\t- # @ # # @ -\n'
     ),
 ])
-def test_draw(l, indent, p1, p2, empty, slotnums, expected):
-    b = board.Board.from_list(l)
+def test_draw(lst, indent, p1, p2, empty, slotnums, expected):
+    b = board.Board.from_list(lst)
     assert expected == b.draw(
         indent=indent,
         p1=p1,
