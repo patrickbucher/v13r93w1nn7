@@ -35,10 +35,10 @@ def main(neutral=False, rotate=False):
             prompt = build_prompt(p, lower, upper, rotate)
             entered = input(prompt) + ''
             entered = entered.strip().lower()
-            if entered == 'rr':
+            if rotate and entered == 'rr':
                 b = b.rot90(CLOCKWISE)
                 played = True
-            elif entered == 'rl':
+            elif rotate and entered == 'rl':
                 b = b.rot90(COUNTER_CLOCKWISE)
                 played = True
             else:
@@ -53,11 +53,7 @@ def main(neutral=False, rotate=False):
                     wrong_move(lower, upper, rotate)
         wins = b.wins()
         if wins[p[0]]:
-            clear()
-            coords = wins[p[0]][0]
-            winner_board = highlight_winner(b, draw, coords, p[2])
-            print(winner_board)
-            print(f'Player {p[0]} has won the game.')
+            end_win(b, draw, p, wins)
             finished = True
         elif b.is_draw():
             end_draw(b, draw)
@@ -69,6 +65,14 @@ def end_draw(b, draw):
     clear()
     print(draw(b))
     print('The game ended in a draw.')
+
+
+def end_win(b, draw, player, wins):
+    clear()
+    coords = wins[player[0]][0]
+    winner_board = highlight_winner(b, draw, coords, player[2])
+    print(winner_board)
+    print(f'Player {player[0]} has won the game.')
 
 
 def build_prompt(player, lower, upper, rotate):
