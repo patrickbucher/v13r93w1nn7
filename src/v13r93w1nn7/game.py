@@ -4,13 +4,12 @@ import argparse
 import random
 import os
 
-from board import Board
+from board import Board, CLOCKWISE, COUNTER_CLOCKWISE
 
 
-def main(neutral=False):
+def main(neutral=False, rotate=False):
     b = Board()
     p1, p2, pn = (1, 'x', 'X'), (2, 'o', 'O'), (3, '.', '.')
-    lower, upper = 1, b.cols()
     finished = False
     p = p1
     draw = decorate_draw(
@@ -29,16 +28,26 @@ def main(neutral=False):
         print(draw(b))
         played = False
         while not played:
-            entered = input(f'Player {p[0]} [{p[1]}] ({lower} to {upper}): ')
-            try:
-                slot = int(entered)
-                if lower <= slot <= upper and (slot-1) in b.valid_moves():
-                    b = b.apply_move(p[0], slot-1)
-                    played = True
-                else:
-                    wrong_move(lower, upper)
-            except ValueError:
-                wrong_move(lower, upper)
+            lower, upper = 1, b.cols()
+            prompt = build_prompt(p, lower, upper, rotate)
+            entered = input(prompt) + ''
+            entered = entered.strip().lower()
+            if entered == 'rr':
+                b = b.rot90(CLOCKWISE)
+                played = True
+            elif entered == 'rl':
+                b = b.rot90(COUNTER_CLOCKWISE)
+                played = True
+            else:
+                try:
+                    slot = int(entered)
+                    if lower <= slot <= upper and (slot-1) in b.valid_moves():
+                        b = b.apply_move(p[0], slot-1)
+                        played = True
+                    else:
+                        wrong_move(lower, upper, rotate)
+                except ValueError:
+                    wrong_move(lower, upper, rotate)
         wins = b.wins()
         if wins[p[0]]:
             clear()
@@ -55,6 +64,15 @@ def main(neutral=False):
         p = p2 if p == p1 else p1
 
 
+def build_prompt(player, lower, upper, rotate):
+    prompt = f'Player {player[0]} [{player[1]}] '
+    if rotate:
+        prompt += f'({lower} to {upper}, rr/rl for rotation): '
+    else:
+        prompt += f'({lower} to {upper}): '
+    return prompt
+
+
 def highlight_winner(b, draw, coords, new):
     winner_board = b.as_list()
     for f in coords:
@@ -64,8 +82,13 @@ def highlight_winner(b, draw, coords, new):
     return output.replace('?', new)
 
 
-def wrong_move(lower, upper):
-    print(f'You must pick a free slot between {lower} and {upper}!')
+def wrong_move(lower, upper, rotate=False):
+    msg = f'You must pick a free slot between {lower} and {upper}'
+    if rotate:
+        msg += ', or rr/rl to rotate!'
+    else:
+        msg += '!'
+    print(msg)
 
 
 def decorate_draw(p1, p2, pn, empty, slotnums):
@@ -76,8 +99,10 @@ def decorate_draw(p1, p2, pn, empty, slotnums):
 
 def clear():
     if os.name == 'nt':
+        # Windows
         os.system('cls')
     else:
+        # Unix
         os.system('clear')
 
 
@@ -86,6 +111,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--neutral', default=False, action='store_true',
         help='enable neutral stones falling randomly before every round')
+    parser.add_argument(
+        '--rotate', default=False, action='store_true',
+        help='enable rotation (clockwise and counter clockwise)')
     args = parser.parse_args()
-    print(args.neutral)
-    main(neutral=args.neutral)
+    main(neutral=args.neutral, rotate=args.rotate)
