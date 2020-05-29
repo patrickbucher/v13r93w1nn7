@@ -102,12 +102,13 @@ class Board:
             row, col = row + direction[0], col + direction[1]
         return None
 
-    def draw(self, indent='\t', p1='x', p2='o',
+    def draw(self, indent='\t', p1='x', p2='o', pn='/',
              empty='_', illegal='?', slotnums=False):
         fields = {
             EMPTY: empty,
             PLAYER_ONE: p1,
             PLAYER_TWO: p2,
+            NEUTRAL: pn,
         }
         output = ''
         if slotnums:

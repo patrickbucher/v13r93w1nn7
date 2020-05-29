@@ -486,7 +486,7 @@ def test_wins(lst, expected):
     expected == b.wins()
 
 
-@pytest.mark.parametrize('lst,indent,p1,p2,empty,slotnums,expected', [
+@pytest.mark.parametrize('lst,indent,p1,p2,pn,empty,slotnums,expected', [
     (
         [
             [0, 0, 0, 0, 0, 0, 0],
@@ -495,7 +495,7 @@ def test_wins(lst, expected):
             [0, 1, 0, 0, 0, 0, 0],
             [0, 2, 1, 2, 0, 0, 0],
             [0, 1, 2, 1, 1, 2, 0],
-        ], ' ', 'x', 'o', '_', True,
+        ], ' ', 'x', 'o', '/', '_', True,
         ' 1 2 3 4 5 6 7\n' +
         ' _ _ _ _ _ _ _\n' +
         ' _ _ _ _ _ _ _\n' +
@@ -508,24 +508,42 @@ def test_wins(lst, expected):
         [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 3, 0, 2, 0, 0],
+            [0, 0, 1, 1, 2, 0, 0],
+            [3, 0, 1, 3, 2, 2, 3],
+        ], ' ', 'x', 'o', '/', '_', True,
+        ' 1 2 3 4 5 6 7\n' +
+        ' _ _ _ _ _ _ _\n' +
+        ' _ _ _ _ _ _ _\n' +
+        ' _ _ _ _ x _ _\n' +
+        ' _ _ / _ o _ _\n' +
+        ' _ _ x x o _ _\n' +
+        ' / _ x / o o /\n'
+    ),
+    (
+        [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0],
-            [0, 2, 1, 2, 0, 0, 0],
+            [0, 2, 1, 2, 3, 0, 0],
             [0, 1, 2, 1, 1, 2, 0],
-        ], '\t', '#', '@', '-', False,
+        ], '\t', '#', '@', '*', '-', False,
         '\t- - - - - - -\n' +
         '\t- - - - - - -\n' +
         '\t- - - - - - -\n' +
         '\t- # - - - - -\n' +
-        '\t- @ # @ - - -\n' +
+        '\t- @ # @ * - -\n' +
         '\t- # @ # # @ -\n'
     ),
 ])
-def test_draw(lst, indent, p1, p2, empty, slotnums, expected):
+def test_draw(lst, indent, p1, p2, pn, empty, slotnums, expected):
     b = board.Board.from_list(lst)
     assert expected == b.draw(
         indent=indent,
         p1=p1,
         p2=p2,
+        pn=pn,
         empty=empty,
         slotnums=slotnums)
