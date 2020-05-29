@@ -1,18 +1,30 @@
 #!/usr/bin/env python3
 
+import argparse
+import random
 import os
 
 from board import Board
 
 
-def main():
+def main(neutral=False):
     b = Board()
-    p1, p2 = (1, 'x', 'X'), (2, 'o', 'O')
+    p1, p2, pn = (1, 'x', 'X'), (2, 'o', 'O'), (3, '.', '.')
     lower, upper = 1, b.cols()
     finished = False
     p = p1
-    draw = decorate_draw(p1=p1[1], p2=p2[1], empty='_', slotnums=True)
+    draw = decorate_draw(
+        p1=p1[1],
+        p2=p2[1],
+        pn=pn[1],
+        empty='_',
+        slotnums=True)
     while not finished:
+        if neutral and p == p1:
+            # put neutral stone before p1 plays (before every round)
+            moves = b.valid_moves()
+            if moves:
+                b = b.apply_move(pn[0], random.choice(moves))
         clear()
         print(draw(b))
         played = False
@@ -56,9 +68,9 @@ def wrong_move(lower, upper):
     print(f'You must pick a free slot between {lower} and {upper}!')
 
 
-def decorate_draw(p1, p2, empty, slotnums):
+def decorate_draw(p1, p2, pn, empty, slotnums):
     def _draw(b):
-        return b.draw(p1=p1, p2=p2, empty=empty, slotnums=slotnums)
+        return b.draw(p1=p1, p2=p2, pn=pn, empty=empty, slotnums=slotnums)
     return _draw
 
 
@@ -70,4 +82,10 @@ def clear():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='v13r93w1nn7')
+    parser.add_argument(
+        '--neutral', default=False, action='store_true',
+        help='enable neutral stones falling randomly before every round')
+    args = parser.parse_args()
+    print(args.neutral)
+    main(neutral=args.neutral)
