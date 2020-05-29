@@ -180,9 +180,11 @@ Das Spiel konnte in dieser Grundversion erfolgreich getestet werden. Es ist somi
 
 \section{Zweite Iteration: Anwendung von Game-Design-Theorie}
 
+In der zweiten Iteration soll das bestehende Spiel zunächst unter zwei verschiedenen theoretischen Aspekten des Game-Designs untersucht werden. Anschliessend sollen Vorschläge ausgearbeitet werden, wie das bestehende Spiel unter diesen beiden Gesichtspunkten verbessert werden kann.
+
 \subsection{Theorie}
 
-TODO: welche Theorie wird verwendet?
+Beim Spielen von «Vier gewinnt» treffen die Spieler nur eine Art von Entscheidung: Die Wahl des Schachts, in welcher ein Stein eingeworfen wird. Auch kommt das Spiel ohne jegliche Zufallsmomente aus, wodurch es mit der Zeit etwas eintönig und ‒ beim wiederholten Spielen gegen den gleichen Kontrahenten ‒ mit der Zeit etwas absehbar wird. Bezogen auf das Spiel «Vier gewinnt» sollen darum diese beiden theoretischen Aspekte ‒ \textit{Entscheidungen} und \textit{Zufall} ‒ analysiert werden.
 
 \subsubsection{Entscheidungen}
 
@@ -201,29 +203,75 @@ Interessante Entscheidungen unterscheiden sich von uninteressanten Enscheidungen
 
 Bei «Vier gewinnt» steht dem Spieler nur eine Art von Auswahl zur Verfügung: Die Wahl des Schachts, in der ein Stein eingeworfen werden soll. Das Spiel kann dann interessanter werden, wenn andere Arten von Entscheidungen angeboten werden. Je nach Spielsituation wäre dann eine andere Art der Entscheidung angebracht.
 
-\subsubsection{Randomness}
+\subsubsection{Zufall}
 
-TODO: Theorie de Randomness zusammenfassen
+Der Zufall spielt in verschiedenen Spielen eine unterschiedlich grosse Rolle. Dabei lassen sich die Spiele in die folgenden Kategorien einteilen:
+
+\begin{description}
+    \item[Gewissheit] In einigen wenigen Spielen ist der Ausgang einer Partie schon im vorher so gut wie gewiss. Dies ist etwa im Spiel «Tic, Tac, Toe» der Fall, wo Partien in der Regel unentschieden enden ‒ sofern sich keiner der beiden Spieler extrem dumm anstellt.
+    \item[Risiko] Bei sogenannten Glücksspielen, wie z.B. beim Roulette oder bei einarmigen Banditen, ist sich der Spieler über die Ungewissheit des Spielausgangs bewusst. Die Zufallskomponente entscheidet über Gewinn und Verlust.
+    \item[Ungewissheit] Bei manchen Spielen gibt es keine Möglichkeit den Ausgang einer Partie vorauszusagen. Dies ist etwa in Spielen wie Schach der Fall, gerade wenn man den Gegner nicht kennt.
+\end{description}
+
+Bei «Vier gewinnt» gibt es keine Gewissheit darüber, wie das Spiel ausgehen wird. Je besser man einen Gegner jedoch kennenlernt, desto besser kann man sich auf dessen Strategien einstellen. Der Spielverlauf wird dadurch besser absehbar ‒ und mit der Zeit langweilig.
+
+Im Modul \textit{Deep Learning for Games} wurden u.a. die Eröffnungszüge verschiedener Spiele (u.a. «Vier gewinnt») betrachtet. Wenig überraschend wurde dabei festgestellt, dass der erste Spieler den ersten Stein am besten in den mittleren Schacht einwirft. Beim Spiel unter erfahrenen Spielern dürfte die Eröffnung deshalb immer gleich ausfallen, wodurch die ersten paar Züge mit der Zeit recht mechanisch ausgeführt werden dürften.
+
+Durch das Fehlen jeglicher Zufallskomponenten dürfte «Vier gewinnt» nach einigen Partien gegen den gleichen Gegner recht langweilig werden.
 
 \subsection{Verbesserung des Prototyps}
 
+Das Fehlen von interessanten Entscheidungen und Zufallsmomenten führen zu einer geringen Langzeitmotivation bei «Vier gewinnt». Diese kann erhöht werden, wenn diese beiden Aspekte ins Spiel eingebaut werden. Hierzu wurden zwei Ideen entwickelt: Die Rotation des Spielfelds und zufällig fallende, neutrale Steine.
+
 \subsubsection{Rotation als interessante Entscheidung}
+
+Bei «Vier gewinnt» bleiben gespielte Steine bis zum Spielende an ihrer ursprünglichen Position. Das Spiel wird so recht statisch. Jeder Spielzug hat nur Auswirkungen auf ein Feld. Dass Steine sich nicht seitlich bewegen oder nach oben wandern können ist den Regeln der Physik geschuldet. Die abgetrennten Schächte verhindern die Bewegung der Steine nach links oder rechts; die Schwerkraft verhindert das Wandern der Steine nach oben.
+
+Da es sich bei der vorliegenden Umsetzung um ein Computerspiel handelt, können diese Einschränkungen etwas gelockert werden. Lässt man die starren Schächte weg, bzw. macht man sie durchlässiger, könnten die Steine bei einer Drehung des Feldes in eine andere Spalte (bzw. dann: Zeile) fallen. Die Schwerkraft könnte dabei ihre Wirkung behalten.
+
+Das gedrehte Spielfeld ändert dadurch seine Dimension von 7x6 auf 6x7. Interessant ist, dass sich die Positionen der einzelnen Steine dabei \textit{relativ zueinander} ändern könnten. \imgref{fig:rotation} veranschaulicht dieses Prinzip.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.9\linewidth]{pics/rotation-papier.jpg}
     \caption{Die Rotation um 90° als zusätzliche Spielmechanik. Das Spielgitter wird zunächst gedreht, anschliessend fallen die Steine nach unten. Dadurch entsteht eine neue Spielsituation, zumal sich manche Steine relativ zueinander bewegen.}
+    \label{fig:rotation}
 \end{figure}
 
+Die Spieler sollen also die Möglichkeit erhalten, das Spielfeld zu drehen. Diese Aktion soll als Zug gelten, sodass der Spieler nach einer Drehung keinen weiteren Stein spielen kann, bis der Gegner seinen Zug (wiederum Drehung oder Stein spielen) ausgeführt hat.
+
+Durch die veränderte relative Position der Steine zueinander kann sich so aufgrund einer Drehung eine Gewinnsituation ergeben. Es ist sogar möglich, dass hierdurch \textit{mehrere} Gewinnsituation ‒ eines oder gleich beider Spieler ‒ in einem Zug entstehen.
+
+So kann ein Spieler mit einem guten Vorstellungsvermögen eine Situation herbeiführen, die für den Gegner unverdächtig aussieht, und nach einer Drehung des Spielfelds die Partie gewinnen. Selbstverständlich kann der Gegner diese Situation durch eine Drehung in die andere Richtung buchstäblich auf den Kopf stellen und so die Taktik seines Kontrahenten durchkreuzen.
+
+Hierzu müssen zwei neue Spielzüge umgesetzt werden: Die Drehung des Feldes um 90° im Uhrzeigersinn (\texttt{rr} wie \textit{rotate right}) und im Gegenuhrzeigersinn (\texttt{rl} wie \textit{rotate left}).
+
+Als Verfeinerung dieser Mechanik wäre es etwa denkbar, dass die Anzahl der Rotationen pro Spieler und Runde begrenzt oder erst nach einer bestimmten Anzahl gesetzter Steine erlaubt wären.
+
 \subsubsection{Neutrale Steine als Zufallselement}
+
+Da es beim wechselseitigen Setzen der Steine durch zwei Spieler keinen Zufall gibt, soll dieser über einen dritten (neutralen) Spieler eingefügt werden. Dieser wirft vor jeder Runde einen Stein in einen zufälligen (noch nicht komplett gefüllten) Schacht ein.
+
+Dadurch ändert sich die Dynamik des Spiels von Beginn weg, zumal ein in der Mitte gesetzter neutraler Stein den idealen Eröffnungszug verunmöglicht. Fällt der erste zufällig platzierte Stein in die linke oder rechte Hälfte des Feldes, dürfte sich das Spiel tendenziell zunächst in der jeweils anderen Spielfeldhälfte entfalten.
+
+Im weiteren Spielverlauf könnten dann Strategien einzelner Spieler durchkreuzt werden, indem ein zufällig fallender Stein den sicher geglaubten Sieg verhindert. Das Spiel wird dadurch neu lanciert. \imgref{fig:neutral} veranschaulicht die beiden genannten Auswirkungen auf die Spieldynamik.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.9\linewidth]{pics/neutral-papier.jpg}
     \caption{Zufällig fallende, neutrale Steine sollen dem Spiel ein Zufallselement hinzufügen. Dadurch werden etablierte Strategien der Spieler möglicherweise durchkreuzt; sie müssen improvisieren.}
+    \label{fig:neutral}
 \end{figure}
 
+Der beschriebene Ansatz könnte verfeinert werden, indem ein neutraler Stein nicht vor jeder Runde mit Gewissheit, sondern mit einer bestimmten Wahrscheinlichkeit fallen würde. Weiter wäre es möglich, \textit{mehrere} zufällige, neutrale Steine pro Runde mit einer bestimmten Wahrscheinlichkeit fallen zu lassen. Frequenz und Anzahl der Zufallssteine könnten dabei mit einer Wahrscheinlichkeitsverteilung definiert werden.
+
+Durch den zusätzlichen dritten Spieler füllt sich das Spielfeld tendenziell schneller. Darum dürften die Partien aufgrund dieser Modifikation tendenziell öfters unentschieden ausfallen. Ein grösseres Spielfeld könnte hier Abhilfe schaffen.
+
+\clearpage
+
 \section{Dritte Iteration: Abschliessender Nutzertest und Reflexion}
+
+Für die dritte Iteration, d.h. für den interaktiven Test des erweiterten Spiels, wurden die beiden beschriebenen Zusatzmechanismen jeweils in ihrer einfachsten Form entwickelt. Die vorgeschlagenen Verfeinerungen können dann als Ausblick aufgegriffen werden, sollten sich die umgesetzten Änderungen als unbefriedigend herausstellen.
 
 \subsection{Durchführung der Tests}
 
