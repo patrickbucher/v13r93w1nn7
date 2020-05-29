@@ -8,7 +8,7 @@ PLAYER_ONE = 1
 PLAYER_TWO = 2
 NEUTRAL = 3
 
-FIELD_VALUES = [EMPTY, PLAYER_ONE, PLAYER_TWO]
+FIELD_VALUES = [EMPTY, PLAYER_ONE, PLAYER_TWO, NEUTRAL]
 
 SHIFTS = {
     # direction: (row shift, col shift)
@@ -77,7 +77,7 @@ class Board:
         for row in range(self.b.shape[0]):
             for col in range(self.b.shape[1]):
                 player = self.b[row, col]
-                if player == EMPTY:
+                if player in [EMPTY, NEUTRAL]:
                     continue
                 for direction in SHIFTS.values():
                     win_indices = self.is_win(player, (row, col), direction)
