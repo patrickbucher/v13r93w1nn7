@@ -174,13 +174,17 @@ Player 1 has won the game.
 
 Hierbei wird zur leichteren Erkennung die Siegreihe hervorgehoben, indem der Spielstein durch einen entsprechenden Grossbuchstaben ersetzt wird (\texttt{x} wird hier durch \texttt{X} ersetzt). Dies soll Diskussionen zwischen aufbegrachten Sysadmins verhindern, die ansonsten nur in die Richtung gehen würde, dass diese Software halt falsch programmiert worden sei ‒ und die Erkennung der Siegbedingung nicht ausreichend getestet.
 
-Das Spiel ist bereit für die erste Testreihe: Das Testen der Grundversion.
+Das Spiel konnte in dieser Grundversion erfolgreich getestet werden. Es ist somit bereit für die Weiterentwicklung, die im nächsten Kapitel besprochen wird.
 
 \newpage
 
 \section{Zweite Iteration: Anwendung von Game-Design-Theorie}
 
-\subsection{Entscheidungen}
+\subsection{Theorie}
+
+TODO: welche Theorie wird verwendet?
+
+\subsubsection{Entscheidungen}
 
 Verschiedene Spiele lassen verschiedene Arten von Entscheidungen zu. Bei einfachen Spielen hat man es v.a. mit uninteressanten Entscheidungen zu tun. Diese lassen sich in die folgenden Kategorien aufteilen:
 
@@ -197,17 +201,38 @@ Interessante Entscheidungen unterscheiden sich von uninteressanten Enscheidungen
 
 Bei «Vier gewinnt» steht dem Spieler nur eine Art von Auswahl zur Verfügung: Die Wahl des Schachts, in der ein Stein eingeworfen werden soll. Das Spiel kann dann interessanter werden, wenn andere Arten von Entscheidungen angeboten werden. Je nach Spielsituation wäre dann eine andere Art der Entscheidung angebracht.
 
-\subsection{Balancing}
+\subsubsection{Randomness}
 
-\newpage
+TODO: Theorie de Randomness zusammenfassen
+
+\subsection{Verbesserung des Prototyps}
+
+\subsubsection{Rotation als interessante Entscheidung}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{pics/rotation-papier.jpg}
-    \caption{Die Rotation um 90° als zusätzliche Spielmechanik. Das Spielgitter wird zunächst gedreht, anschliessend fallen die Steine nach unten. So entsteht eine neue Spielsituation, da sich manche Steine relativ zueinander bewegen.}
+    \includegraphics[width=0.9\linewidth]{pics/rotation-papier.jpg}
+    \caption{Die Rotation um 90° als zusätzliche Spielmechanik. Das Spielgitter wird zunächst gedreht, anschliessend fallen die Steine nach unten. Dadurch entsteht eine neue Spielsituation, zumal sich manche Steine relativ zueinander bewegen.}
+\end{figure}
+
+\subsubsection{Neutrale Steine als Zufallselement}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{pics/neutral-papier.jpg}
+    \caption{Zufällig fallende, neutrale Steine sollen dem Spiel ein Zufallselement hinzufügen. Dadurch werden etablierte Strategien der Spieler möglicherweise durchkreuzt; sie müssen improvisieren.}
 \end{figure}
 
 \section{Dritte Iteration: Abschliessender Nutzertest und Reflexion}
+
+\subsection{Durchführung der Tests}
+
+Mit n Leuten m Runden gespielt
+
+\subsection{Rückmeldungen der Spieler}
+
+\subsection{Fazit}
+
 \newpage
 
 \listoffigures
