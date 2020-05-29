@@ -24,6 +24,9 @@ def main(neutral=False, rotate=False):
             moves = b.valid_moves()
             if moves:
                 b = b.apply_move(pn[0], random.choice(moves))
+            if b.is_draw():
+                end_draw(b, draw)
+                break
         clear()
         print(draw(b))
         played = False
@@ -57,11 +60,15 @@ def main(neutral=False, rotate=False):
             print(f'Player {p[0]} has won the game.')
             finished = True
         elif b.is_draw():
-            clear()
-            print(draw(b))
-            print('The game ended in a draw.')
+            end_draw(b, draw)
             finished = True
         p = p2 if p == p1 else p1
+
+
+def end_draw(b, draw):
+    clear()
+    print(draw(b))
+    print('The game ended in a draw.')
 
 
 def build_prompt(player, lower, upper, rotate):
