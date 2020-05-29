@@ -273,9 +273,61 @@ Durch den zusätzlichen dritten Spieler füllt sich das Spielfeld tendenziell sc
 
 Für die dritte Iteration, d.h. für den interaktiven Test des erweiterten Spiels, wurden die beiden beschriebenen Zusatzmechanismen jeweils in ihrer einfachsten Form entwickelt. Die vorgeschlagenen Verfeinerungen können dann als Ausblick aufgegriffen werden, sollten sich die umgesetzten Änderungen als unbefriedigend herausstellen.
 
+\subsection{Spielen mit Zusatzfeatures}
+
+Die beiden Zusatzfeatures können über ein Flag aktiviert werden:
+
+\begin{description}
+    \item[\texttt{--rotate}] Aktiviert die Rotation um 90° als zusätzliche Spielzüge. Mit \texttt{rr} wird das Spielfeld um 90° «nach recht» \textit{rotate right} (im Uhrzeigersinn), mit \texttt{rl} wird das Spielfeld um 90° «nach links» \textit{rotate left} (um Gegenuhrzeigersinn) rotiert.
+    \item[\texttt{--neutral}] Aktiviert zusätzliche neutrale Steine. Eins solcher wird vor jeder Runde in einen zufälligen Schacht eingeworfen.
+\end{description}
+
+Die Beiden Optionen können kombiniert werden. Das Spiel wird dann folgendermassen aufgerufen (ausgehend vom Root-Verzeichnis des Repositories):
+
+\begin{lstlisting}
+$ cd src/
+$ python -m venv env
+$ source env/bin/activate
+$ pip install -r requirements.txt
+$ v13r93w1nn7/game.py --rotate --neutral
+\end{lstlisting}
+
+Ein möglicher Spielverlauf mit zufälligen, neutralen Steinen könnte inmitten der vierten Runde etwa so aussehen:
+
+\begin{lstlisting}
+        1 2 3 4 5 6 7
+        _ _ _ _ _ _ _
+        _ _ _ _ _ _ _
+        _ _ _ _ _ _ _
+        _ . x o _ _ _
+        _ x . . _ _ _
+        _ o x o x _ .
+
+Player 2 [o] (1 to 7, rr/rl for rotation): rr
+\end{lstlisting}
+
+Spieler zwei entscheidet sich für eine Rotation um 90° im Uhrzeigersinn, was folgende Auswirkungena auf das Spielfeld hat:
+
+\begin{lstlisting}
+        1 2 3 4 5 6
+        _ _ _ _ _ _
+        _ _ _ _ _ _
+        o _ _ _ _ _
+        x _ _ _ _ _
+        o x . _ _ _
+        x . x _ _ _
+        . . o _ . _
+
+Player 1 [x] (1 to 6, rr/rl for rotation):
+\end{lstlisting}
+
+Man beachte, dass die Wahlmöglichkeiten der Schächte nun von vormals eins bis sieben auf neu eins bis sechs eingeschränkt worden sind.
+
+Das Spiel ist somit weiterentwickelt worden und bereit für die Testläufe.
+
 \subsection{Durchführung der Tests}
 
-Mit n Leuten m Runden gespielt
+Idee: mindestens drei Leute, mit jeder Person mehrere Runden spielen. Zunächst die Standardversion. Dann einmal mit \texttt{--neutral}, dann einmal mit \texttt{--rotate}, und schliesslich einmal mit beiden Features. Wiederholungen bei Bedarf.
 
 \subsection{Rückmeldungen der Spieler}
 
