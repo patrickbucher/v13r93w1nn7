@@ -10,6 +10,11 @@ NEUTRAL = 3
 
 FIELD_VALUES = [EMPTY, PLAYER_ONE, PLAYER_TWO, NEUTRAL]
 
+CLOCKWISE = 1
+COUNTER_CLOCKWISE = -1
+
+ROTATIONS = [CLOCKWISE, COUNTER_CLOCKWISE]
+
 SHIFTS = {
     # direction: (row shift, col shift)
     'north': (-1, 0),
@@ -35,7 +40,8 @@ class Board:
     def from_list(lst, validate=True):
         np_arr = np.array(lst)
         if validate:
-            if np_arr.shape[0] != ROWS or np_arr.shape[1] != COLS:
+            y, x = np_arr.shape[0], np_arr.shape[1]
+            if x not in [ROWS, COLS] or y not in [ROWS, COLS]:
                 raise ValueError(f'shape must be {ROWS}x{COLS}')
             ok = np.all(np.isin(np_arr, FIELD_VALUES))
             if not ok:
@@ -101,6 +107,31 @@ class Board:
                 return matches
             row, col = row + direction[0], col + direction[1]
         return None
+
+    def rot90(self, direction):
+        if direction not in ROTATIONS:
+            raise ValueError(f'{direction} is not in {ROTATIONS}')
+        n = 1 if direction == COUNTER_CLOCKWISE else 3
+        arr = self.align(direction)
+        arr = np.rot90(arr, n)
+        b = Board(b=arr)
+        return b
+
+    def align(self, direction):
+        arr = np.zeros((self.rows(), self.cols()))
+        for row in range(self.rows()):
+            non_empty_fields = []
+            for col in range(self.cols()):
+                if self.b[row, col] != EMPTY:
+                    non_empty_fields.append(self.b[row, col])
+            i = 0
+            if direction == CLOCKWISE:
+                # right align: skip left
+                i = self.cols() - len(non_empty_fields)
+            for field in non_empty_fields:
+                arr[row, i] = field
+                i += 1
+        return arr
 
     def draw(self, indent='\t', p1='x', p2='o', pn='/',
              empty='_', illegal='?', slotnums=False):
