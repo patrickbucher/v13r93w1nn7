@@ -42,8 +42,8 @@
 
 \section*{Abstract}
 
-«Vier gewinnt» ist ein weit verbreitetes und bekanntes Strategiespiel für zwei Personen, bei der es darum geht, vier Spielsteine auf einem 7x6-Raster in eine horizontale, vertikele oder diagonale Reihe zu bringen. Zu Zeiten der Corona-Krise lässt sich das Spiel schlecht in physischer Gegenwart an einem Tisch spielen. Ausserdem schaffen die altbekannten Spielregeln und -mechaniken kaum noch einen Anreiz für das Spiel. In der vorliegenden Arbeit soll das Spiel «Vier gewinnt» mit neuen Mechaniken interessanter und besonders auf die Personengruppe der Systemadministratoren angepasst werden, die das Spiel lieber auf der Kommandozeile als in der physichen Version spielen.
-
+«Vier gewinnt» ist ein weit verbreitetes und bekanntes Strategiespiel für zwei Personen, bei der es darum geht, vier Spielsteine auf einem 7x6-Raster in eine horizontale, vertikele oder diagonale Reihe zu bringen. Zu Zeiten der Corona-Krise lässt sich das Spiel schlecht in physischer Gegenwart an einem Tisch spielen. Ausserdem schaffen die altbekannten Spielregeln und -mechaniken kaum noch einen Anreiz für das Spiel. In der vorliegenden Arbeit soll das Spiel «Vier gewinnt» mit neuen Mechaniken interessanter und besonders auf die Personengruppe der Systemadministratoren angepasst werden, die das Spiel lieber auf der Kommandozeile als in der physichen Version spielen. Die Auswirkung dieser neuen Mechaniken werden im Rahmen eines \textit{Playtests} mit verschiedenen Versuchspersonen untersucht.
+ 
 \newpage
 
 \tableofcontents
@@ -327,11 +327,27 @@ Das Spiel ist somit weiterentwickelt worden und bereit für die Testläufe.
 
 \subsection{Durchführung der Tests}
 
-Idee: mindestens drei Leute, mit jeder Person mehrere Runden spielen. Zunächst die Standardversion. Dann einmal mit \texttt{--neutral}, dann einmal mit \texttt{--rotate}, und schliesslich einmal mit beiden Features. Wiederholungen bei Bedarf.
+Das entwickelte Spiel soll mit mindestens drei Versuchspersonen gespielt werden, um eine gewisse Bandbreite an Rückmeldungen zu erhalten.
+
+Zunächst soll mindestens eine Partie mit der ursprünglichen Version gespielt werden, d.h. das Spiel wird ohne die beiden eingeführten Optionen gestartet. Weitere Partien können angehängt werden um mit dem Setup und der Bedienung besser vertraut zu werden.
+
+Anschliessend wird mindestens eine Partie mit dem \texttt{--neutral}-Flag gespielt. Kann die Versuchsperson die Auswirkung dieser Erweiterung nicht feststellen oder nicht artikulieren, sollen weitere Partien gespielt werden.
+
+Es folgt mindestens eine Partie nur mit dem \texttt{--random}-Flag. So können die beiden Zusatzfeatures isoliert voneinander getestet werden.
+
+Zum Schluss wird mindestens eine Partie mit beiden Flags, \texttt{--neutral} und \texttt{--random}, gespielt, um festzustellen, ob die \textit{Kombination} der beiden Erweiterungen andere Auswirkungen auf das Spiel hat als die beiden Erweiterungen für sich betrachtet. Wirken sich die beiden neuen Mechanismen wechselseitig aufeinander aus, oder ist die Auswirkung derselben bloss im Sinne der «Summe ihrer Teile» zu betrachten?
 
 \subsection{Rückmeldungen der Spieler}
 
+\begin{description}
+    \item[Hans Landa] TODO
+    \item[Dr. King Schulz] TODO
+    \item[Hugo Stiglitz] TODO
+\end{description}
+
 \subsection{Fazit}
+
+TODO
 
 \newpage
 
