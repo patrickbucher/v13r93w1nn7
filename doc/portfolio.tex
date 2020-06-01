@@ -339,15 +339,15 @@ Zum Schluss wird mindestens eine Partie mit beiden Flags, \texttt{--neutral} und
 
 \subsection{Rückmeldungen der Spieler}
 
+Die Rückmeldungen der Testpersonen nach den beschriebenen Testläufen lautete folgendermassen:
+
 \begin{description}
-    \item[Hans Landa] TODO
-    \item[Dr. King Schulz] TODO
-    \item[Hugo Stiglitz] TODO
+    \item[Ksenia B.] Die Bedienung war zunächst bei der Grundversion nicht ganz verständlich. Nach den ersten paar Zügen bereitete dies jedoch keine Probleme mehr. Bei der Grundversion sei der Spielverlauf recht einfach absehbar. Der neutrale Spielstein (\texttt{.}) konnte zunächst optisch schlecht erkannt werden. Der Sieg wurde durch einen neutralen Stein ermöglicht, der nach einem Zug von Spieler 2 gefallen war. Man müsse also nicht nur darauf achten, wo der Gegner spielt, sondern auch, wo nach zwei Zügen jeweils ein neutraler Stein falle. Bei der Rotation hatte die Erkennung der Gewinnsituation zunächst nicht funktioniert.\footnote{Dies lag daran, dass Spieler 2 durch eine Rotation Spieler 1 zum Sieger gemacht hatte, wobei Gewinnsituationen immer nur für den Spieler ausgewertet wurden, der den letzten Zug machte. Dieses Verhalten ist für die Grundversion korrekt, musste aber im Zusammenhang mit der \texttt{--rotate}-Erweiterung angepasst werden (siehe Commit \texttt{e012a9e}). [Zwischen den Testläufen sollen nur schwere Fehler korrigiert werden. Anpassungen, die sich auf die Spielmechanik auswirken, werden unterlassen.]} Es benötige einiges an Vorstellungskraft um die Auswirkungen einer Drehung abschätzen zu können. So ist das Spiel aufgrund einer Rotation des Gegners entschieden worden. (Dessen Versuch ging nach hinten los.) Das Spiel mit der Kombination von \texttt{--rotate} und \texttt{--neutral} wurde ebenfalls durch eine Drehung entschieden, dieses mal aber vom Spieler, der die Drehung ausgeführt hatte. Dieser konnte die Situation jedoch nicht voll durchblicken, sodass der Sieg durch die Drehung ein Glückstreffer war. Insgesamt wurde der Drehmechanismus als positiv, wenn auch als herausfordernd bewertet. Die zufälligen, neutralen Steine kamen schlecht weg, denn dadurch verkomme das Spiel zu einem Glücksspiel. Auch sei das Feld dafür etwas zu klein und fülle sich zu schnell an. Drehungen sind durch die Zufallssteine noch schwieriger abzuschätzen, da mehr Steine beachtet werden müssen.
 \end{description}
 
 \subsection{Fazit}
 
-TODO
+Die beiden Erweiterungen arbeiten in entgegengesetzte Richtungen: Belohnt der Drehmechanismus eine hohe Vorstellungskraft und ermöglicht neue Strategien, verkommt das Spiel mit den zufällig fallenden, neutralen Steinen zu einem Glücksspiel. Für letztere sei das Feld ‒ wie befürchtet ‒ etwas zu klein.
 
 \newpage
 
