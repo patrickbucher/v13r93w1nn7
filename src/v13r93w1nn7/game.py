@@ -52,8 +52,12 @@ def main(neutral=False, rotate=False):
                 except ValueError:
                     wrong_move(lower, upper, rotate)
         wins = b.wins()
+        opponent = p2 if p == p1 else p1
         if wins[p[0]]:
             end_win(b, draw, p, wins)
+            finished = True
+        elif wins[opponent[0]]:
+            end_win(b, draw, opponent, wins)
             finished = True
         elif b.is_draw():
             end_draw(b, draw)
