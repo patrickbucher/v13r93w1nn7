@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='v13r93w1nn7-patrickbucher',
-    version='0.0.4',
+    version='0.0.5',
     author='Patrick Bucher',
     author_email='patrick.bucher@mailbox.org',
     description='extended version of the board game «Vier gewinnt»',
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved : GPLv3',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.8',
