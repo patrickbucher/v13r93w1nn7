@@ -1,6 +1,6 @@
 import pytest
 
-import board
+from v13r93w1nn7 import board
 
 
 def test_create_empty_board():

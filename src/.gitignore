@@ -1,3 +1,5 @@
-**__pycache__/
-**env/
-.coverage
+build/
+dist/
+env/
+v13r93w1nn7_patrickbucher.egg-info/
+**/__pycache__/
