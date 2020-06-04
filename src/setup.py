@@ -4,8 +4,8 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='v13r93w1nn7-patrickbucher',
-    version='0.0.5',
+    name='v13r93w1nn7',
+    version='0.0.6',
     author='Patrick Bucher',
     author_email='patrick.bucher@mailbox.org',
     description='extended version of the board game «Vier gewinnt»',
