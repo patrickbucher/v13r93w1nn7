@@ -58,7 +58,7 @@ Sysadmins haben spezielle Bedürfnisse.\footnote{Als Sysadmins werden im Rahmen 
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{pics/vier-gewinnt.jpg}
-    \caption{Das klassische «Vier gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus.}
+    \caption{Das klassische «Vier gewinnt» (Meatspace-Version). Die grellen Farben der VGA-Palette überfordern das auf die monochrome Bildschirmdarstellung optimierte Auge eines Sysadmins. Das analoge Einwerfen der Steine in die Schächte weckt traumatische Erinnerungen an die Handhabung einer Computermaus. (Quelle: der Autor)}
     \label{fig:vier-gewinnt}
 \end{figure}
 
@@ -174,7 +174,9 @@ Player 1 has won the game.
 
 Hierbei wird zur leichteren Erkennung die Siegreihe hervorgehoben, indem der Spielstein durch einen entsprechenden Grossbuchstaben ersetzt wird (\texttt{x} wird hier durch \texttt{X} ersetzt). Dies soll Diskussionen zwischen aufbegrachten Sysadmins verhindern, die ansonsten nur in die Richtung gehen würden, dass diese Software halt falsch programmiert worden sei ‒ und die Erkennung der Siegbedingung nicht ausreichend getestet.
 
-Das Spiel konnte in dieser Grundversion erfolgreich getestet werden. Es ist somit bereit für die Weiterentwicklung, die im nächsten Kapitel besprochen wird.
+\subsection{Zwischenfazit}
+
+Das Spiel konnte in der Grundversion erfolgreich getestet werden: automatisiert mithilfe von pytest, und manuell mit dem beschriebenen Setup auf einem Server. Somit ist alles bereit für die Weiterentwicklung, die im nächsten Kapitel besprochen wird.
 
 \newpage
 
@@ -234,7 +236,7 @@ Das gedrehte Spielfeld ändert dadurch seine Dimension von 7x6 auf 6x7. Interess
 \begin{figure}
     \centering
     \includegraphics[width=0.9\linewidth]{pics/rotation-papier.jpg}
-    \caption{Die Rotation um 90° als zusätzliche Spielmechanik. Das Spielgitter wird zunächst gedreht, anschliessend fallen die Steine nach unten. Dadurch entsteht eine neue Spielsituation, zumal sich manche Steine relativ zueinander bewegen.}
+    \caption{Die Rotation um 90° als zusätzliche Spielmechanik. Das Spielgitter wird zunächst gedreht, anschliessend fallen die Steine nach unten. Dadurch entsteht eine neue Spielsituation, zumal sich manche Steine relativ zueinander bewegen. (Quelle: der Autor)}
     \label{fig:rotation}
 \end{figure}
 
@@ -259,13 +261,21 @@ Im weiteren Spielverlauf könnten dann Strategien einzelner Spieler durchkreuzt 
 \begin{figure}
     \centering
     \includegraphics[width=0.9\linewidth]{pics/neutral-papier.jpg}
-    \caption{Zufällig fallende, neutrale Steine sollen dem Spiel ein Zufallselement hinzufügen. Dadurch werden etablierte Strategien der Spieler möglicherweise durchkreuzt; sie müssen improvisieren.}
+    \caption{Zufällig fallende, neutrale Steine sollen dem Spiel ein Zufallselement hinzufügen. Dadurch werden etablierte Strategien der Spieler möglicherweise durchkreuzt; sie müssen improvisieren. (Quelle: der Autor)}
     \label{fig:neutral}
 \end{figure}
 
 Der beschriebene Ansatz könnte verfeinert werden, indem ein neutraler Stein nicht vor jeder Runde mit Gewissheit, sondern mit einer bestimmten Wahrscheinlichkeit fallen würde. Weiter wäre es möglich, \textit{mehrere} zufällige, neutrale Steine pro Runde mit einer bestimmten Wahrscheinlichkeit fallen zu lassen. Frequenz und Anzahl der Zufallssteine könnten dabei mit einer Wahrscheinlichkeitsverteilung definiert werden.
 
 Durch den zusätzlichen dritten Spieler füllt sich das Spielfeld tendenziell schneller. Darum dürften die Partien aufgrund dieser Modifikation tendenziell öfters unentschieden ausfallen. Ein grösseres Spielfeld könnte hier Abhilfe schaffen.
+
+\subsection{Zwischenfazit}
+
+Mit der Rotation sind in der erweiterten Version von «Vier gewinnt» neu auch interessante Entscheidungen möglich. Die zufällig fallenden, neutralen Steine erweitern das Spiel um Zufallsmomente.
+
+Die erweiterte Spiellogik wurde wiederum mit pytest automatisiert getestet. Weiter wurden die neuen Mechanismen in verschiedenen manuellen Tests erprobt, bist der Zustand des Spiels als gut empfunden wurde.
+
+Der Quellcode ist auf einem GitHub-Repository\footnote{\url{https://github.com/patrickbucher/v13r93w1nn7}} des Autors und auf dem Python Package Index\footnote{\url{https://pypi.org/project/v13r93w1nn7/}} zu finden. Die Dokumentation (das vorliegende Dokument) ist ebenfalls auf dem GitHub-Repository abgelegt.
 
 \clearpage
 
@@ -349,15 +359,15 @@ Die Rückmeldungen der Testpersonen nach den beschriebenen Testläufen lautete f
 
 \subsection{Fazit}
 
-Die beiden Erweiterungen arbeiten in entgegengesetzte Richtungen: Belohnt der Drehmechanismus eine hohe Vorstellungskraft und ermöglicht neue Strategien, verkommt das Spiel mit den zufällig fallenden, neutralen Steinen zu einem Glücksspiel. Für letztere sei das Feld ‒ wie befürchtet ‒ etwas zu klein.
+Die beiden Erweiterungen arbeiten in entgegengesetzte Richtungen: Belohnt der Drehmechanismus eine hohe Vorstellungskraft und ermöglicht neue Strategien, verkommt das Spiel mit den zufällig fallenden, neutralen Steinen zu einem Glücksspiel.
+
+Rein technisch gab es wenig zu beanstanden. Einzig die neutralen Steine sollten durch die Wahl eines anderen Symbols besser kenntlich gemacht werden. Rein spieltechnisch sollten sie aber anders umgesetzt ‒ oder gleich ganz entfernt werden. Mögliche Verbesserungen wären ein grösseres Spielfeld oder eine geringere Frequenz ihres Auftauchens (ca. jede dritte Runde).
 
 Die Drehung als Zusatzfeature ist durchwegs positiv aufgenommen worden. Ein Sieg mittels Rotation ist zwar schwierig zu erreichen, belohnt aber Spieler, die sich intensiver mit dem Spiel befassen möchten.
 
-Rein technisch gab es wenig zu beanstanden. Einzig die neutralen Steine sollten durch die Wahl eines anderen Symbols besser kenntlich gemacht werden. Rein spieltechnisch sollten sie aber besser gleich ganz entfernt werden.
+Die Rotation könnte verfeinert werden. Ein quadratisches Spielfeld (7x7, 8x8) wäre eine mögliche Variante. Die Anzahl der Rotationen könnten pro Spieler begrenzt werden, z.B. auf maximal drei Rotationen pro Spiel, um destruktive Spielweisen zu erschweren.
 
-Die Rotation könnte noch weiter verfeinert werden. Ein quadratisches Spielfeld (7x7, 8x8) wäre eine mögliche Variante. Die Anzahl der Rotationen könnten zudem pro Spieler begrenzt werden, z.B. auf maximal drei Rotationen pro Spiel. So könnte destruktives Spiel erschwert werden.
-
-\textbf{tl;dr:} \textit{Rotation hui, Zufallssteine pfui.}
+Solche Erweiterungen könnten mit zusätzlichen Kommandozeilen-Flags umgesetzt werden. So stehen den Spielern weiterhin verschiedene Varianten zur Verfügung.
 
 \newpage
 
